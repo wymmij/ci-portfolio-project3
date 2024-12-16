@@ -2,11 +2,15 @@ from random import choice
 
 
 class PlayingBoard:
+    """
+    Playingboard class. Sets the graphical representation of the
+    board, and a numerical representation (a list of row, column tuples).
+    Has methods to populate the board with a fleet, update the board after
+    each turn, and fill the board with the fleet's locations.
+    """
 
     def __init__(self):
-        self.fields = [
-            (row, column) for row in range(10) for column in range(10)
-        ]
+        self.fields = [(row, column) for row in range(10) for column in range(10)]
         self.initial_board = """
          ________________________________________
         |                                        |
@@ -73,7 +77,7 @@ class PlayingBoard:
             row, column = field
             updated = updated.replace(f" {row}{column} ", "~~~~")
         return updated
-    
+
     def reveal_board(self, fleet_fields):
         """
         Show the locations of the fleet's ships
@@ -86,8 +90,11 @@ class PlayingBoard:
         return revealed
 
 
-
 class Ship:
+    """
+    Sets ship size, type, and initializes a list of empty coordinates.
+    Has single method to generate a ship's position on the board.
+    """
 
     def __init__(self, size):
         self.size = size
@@ -105,6 +112,11 @@ class Ship:
             self.fields.append(tuple())
 
     def generate_ship_position(self, size, vacant_fields, fleet_fields):
+        """
+        A pair of coordinates is chosen at random from the vacant fields.
+        The rest of the function then attempts to plot a ship of the
+        specified size with this coordinate as its 'origin'.
+        """
         row, column = choice(vacant_fields)
         adjusted_size = size - 1
         if choice(["latitude", "longitude"]) == "latitude":
@@ -159,7 +171,12 @@ class InputException(Exception):
     pass
 
 
+# Helper functions
 def is_valid_coordinate(coord):
+    """
+    Checks whether a tuple 'coordinate' argument lies within the dimensions
+    of the board.
+    """
     row, column = coord
     if row >= 0 and row < 10 and column >= 0 and column < 10:
         return True
@@ -168,6 +185,10 @@ def is_valid_coordinate(coord):
 
 
 def generate_exclusion_digits(digit):
+    """
+    Takes a digit argument and returns a list of digits that will be used
+    to generate a list of coordinates
+    """
     digit_list = [digit]
     if digit > 0:
         digit_list.insert(0, digit - 1)
@@ -191,6 +212,11 @@ def print_rules():
 
 
 def play_game():
+    """
+    Initialises and then populates a board with a fleet of ships.
+    Sets game parameters and enters the main game loop.
+    Upon game conclusion, presents results then prompts for another game.
+    """
 
     board = PlayingBoard()
     fleet = [
@@ -258,10 +284,7 @@ def play_game():
             hits.append(target)
             for ship in fleet:
                 for field in ship.fields:
-                    if (
-                        target == field 
-                        and all(field in hits for field in ship.fields)
-                    ):
+                    if target == field and all(field in hits for field in ship.fields):
                         print(f"A {ship.type} has been sunk")
 
         else:
