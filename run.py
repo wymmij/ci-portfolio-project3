@@ -285,6 +285,17 @@ def play_game():
         print("You don't have enough missiles to destroy the fleet.")
         games_lost += 1
 
+    print(board.reveal_board(fleet_fields))
+    print("-" * 24)
+    print(f"Direct hits:        {len(hits):2d}")
+    print(f"Missiles launched:  {missiles_launched:2d}")
+    print(f"Missiles remaining: {missiles_remaining - missiles_launched:2d}")
+    print("-" * 24, "\n")
+    games_played += 1
+    print(f"Games played: {games_played:2d}")
+    print(f"Games won:    {games_won:2d}")
+    print(f"Games lost:   {games_lost:2d}")
+
 
 def new_session():
     """
