@@ -120,7 +120,6 @@ class Ship:
         # random and if the coordinate 'size' coordinates distance away in
         # the direction specified is a valid coordinate then that direction
         # is chosen, otherwise the opposite direction is chosen.
-
         adjusted_size = size - 1
         if choice(["latitude", "longitude"]) == "latitude":
             if choice(["north", "south"]) == "north":
@@ -145,6 +144,7 @@ class Ship:
                 else:
                     direction = "east"
 
+        # creates list of coordinates for ship
         ship_coords = []
         for step in range(size):
             match direction:
@@ -157,6 +157,9 @@ class Ship:
                 case "west":
                     ship_coords.append((row, column - step))
 
+        # creates the set of coordinates which represent the
+        # ship's coordinates as well as the area surrounding
+        # the ship, which prevents another ship from ‘touching’ it
         exclusion_coords = set()
         for ship in ship_coords:
             row, col = ship
@@ -166,6 +169,9 @@ class Ship:
                 for c in cols:
                     exclusion_coords.add((r, c))
 
+        # only returns a value if the intersection of 'exclusion_coords'
+        # and 'fleet_fields' is an empty set, i.e. there are no elements
+        # common to both sets
         if not exclusion_coords & set(fleet_fields):
             return (ship_coords, list(exclusion_coords))
 
