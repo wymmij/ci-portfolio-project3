@@ -39,9 +39,21 @@ class PlayingBoard:
         """
         vacant_fields = self.fields.copy()
         excluded_fields = []
-        fleet_fields = []  
+        fleet_fields = []
         for ship in fleet:
-            ship_coords, exclusion_coords = ship.generate_ship_position(ship.size, vacant_fields, fleet_fields)
+            while True:
+                try:
+                    # if unpacking fails it's because return value isn't
+                    # a tuple, which was a result of 'generate_ship_position()'
+                    # generating a ship with invalid coordinates. See the
+                    # function for further detail.
+                    ship_coords, exclusion_coords = ship.generate_ship_position(
+                        ship.size, vacant_fields, fleet_fields
+                    )
+                    break
+                except TypeError:
+                    pass
+
             excluded_fields += exclusion_coords
             fleet_fields += ship_coords
             for field in range(len(ship.fields)):
