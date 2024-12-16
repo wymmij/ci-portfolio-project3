@@ -296,6 +296,12 @@ def play_game():
     print(f"Games won:    {games_won:2d}")
     print(f"Games lost:   {games_lost:2d}")
 
+    another_game = input("\nPress Enter for another game (or q to quit):\n> ")
+    if another_game == "q":
+        print(f"Thanks for the game! Bye!")
+    else:
+        play_game(games_played, games_won, games_lost)
+
 
 def new_session():
     """
