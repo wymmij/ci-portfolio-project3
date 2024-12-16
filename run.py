@@ -256,6 +256,22 @@ def play_game():
             print("\nMissed")
             misses.append(target)
 
+        shots.append(target)
+        missiles_launched += 1
+        if (
+            len(fleet_fields) == len(hits)
+            or missiles_remaining == missiles_launched
+            or missiles_remaining - missiles_launched < len(fleet_fields) - len(hits)
+        ):
+            break
+        else:
+            print(board.update_board(hits, misses))
+            print("-" * 24)
+            print(f"Direct hits:        {len(hits):2d}")
+            print(f"Missiles launched:  {missiles_launched:2d}")
+            print(f"Missiles remaining: {missiles_remaining - missiles_launched:2d}")
+            print("-" * 24, "\n")
+
 
 def new_session():
     """
