@@ -74,6 +74,18 @@ class PlayingBoard:
             updated = updated.replace(f" {row}{column} ", "~~~~")
         return updated
     
+    def reveal_board(self, fleet_fields):
+        """
+        Show the locations of the fleet's ships
+        """
+        revealed = self.initial_board
+        for field in self.fields:
+            if field in fleet_fields:
+                row, column = field
+                revealed = revealed.replace(f" {row}{column} ", "<[]>")
+        return revealed
+
+
 
 class Ship:
 
