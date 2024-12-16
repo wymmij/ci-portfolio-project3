@@ -130,6 +130,10 @@ class Ship:
             return (ship_coords, list(exclusion_coords))
 
 
+class InputException(Exception):
+    pass
+
+
 def is_valid_coordinate(coord):
     row, column = coord
     if row >= 0 and row < 10 and column >= 0 and column < 10:
@@ -178,6 +182,39 @@ def play_game():
     ]
 
     fleet_fields = board.populate_board(fleet)
+
+    shots = []
+    hits = []
+    misses = []
+    missiles_launched = 0
+    missiles_remaining = 0
+
+    difficulty_levels = [level for level in range(1, 6)]
+    print("There are 5 levels of difficulty, level 1 being the easiest.")
+    while True:
+        try:
+            difficulty = int(
+                input("Please enter the desired difficulty level (digit):\n> ")
+            )
+            if difficulty > 5 or difficulty < 1:
+                raise InputException
+            break
+        except (ValueError, InputException):
+            print("Please enter a digit between 1 and 5.")
+
+    match difficulty:
+        case 1:
+            missiles_remaining = 80
+        case 2:
+            missiles_remaining = 70
+        case 3:
+            missiles_remaining = 60
+        case 4:
+            missiles_remaining = 50
+        case 5:
+            missiles_remaining = 40
+
+    print(board.initial_board)
 
 
 def new_session():
