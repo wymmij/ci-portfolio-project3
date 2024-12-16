@@ -229,7 +229,7 @@ def print_rules():
     print("  the arsenal reduces by 10 missiles.\n")
 
 
-def play_game():
+def play_game(games_played=0, games_won=0, games_lost=0):
     """
     Initialises and then populates a board with a fleet of ships.
     Sets game parameters and enters the main game loop.
