@@ -216,7 +216,34 @@ def play_game():
 
     print(board.initial_board)
 
+    while missiles_launched < missiles_remaining:
+        while True:
+            try:
+                target = input("Enter the digits of the next target:\n> ")
+                row, column = target
+                target = (int(row), int(column))
+                break
+            except ValueError:
+                print("Please enter a 2 digit number (0-9) only.")
 
+        if target in shots:
+            print("\nA waste! You've already fired at this target.")
+        elif target in fleet_fields:
+            print("\nHit!")
+            hits.append(target)
+            for ship in fleet:
+                for field in ship.fields:
+                    if (
+                        target == field 
+                        and all(field in hits for field in ship.fields)
+                    ):
+                        print(f"A {ship.type} has been sunk")
+
+        else:
+            print("\nMissed")
+            misses.append(target)
+
+            
 def new_session():
     """
     Begins a new session. Welcomes user, prompts for name, offers to display
