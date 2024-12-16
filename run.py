@@ -71,11 +71,9 @@ class PlayingBoard:
         """
         updated = self.initial_board
         for field in hits:
-            row, column = field
-            updated = updated.replace(f" {row}{column} ", "<[]>")
+            updated = updated.replace(f" {translate_field(field)} ", "<[]>")
         for field in misses:
-            row, column = field
-            updated = updated.replace(f" {row}{column} ", "~~~~")
+            updated = updated.replace(f" {translate_field(field)} ", "~~~~")
         return updated
 
     def reveal_board(self, fleet_fields):
@@ -85,8 +83,7 @@ class PlayingBoard:
         revealed = self.initial_board
         for field in self.fields:
             if field in fleet_fields:
-                row, column = field
-                revealed = revealed.replace(f" {row}{column} ", "<[]>")
+                revealed = revealed.replace(f" {translate_field(field)} ", "<[]>")
         return revealed
 
 
@@ -118,6 +115,12 @@ class Ship:
         specified size with this coordinate as its 'origin'.
         """
         row, column = choice(vacant_fields)
+
+        # with the randomly chosen coordinate, a direction is chosen at
+        # random and if the coordinate 'size' coordinates distance away in
+        # the direction specified is a valid coordinate then that direction
+        # is chosen, otherwise the opposite direction is chosen.
+
         adjusted_size = size - 1
         if choice(["latitude", "longitude"]) == "latitude":
             if choice(["north", "south"]) == "north":
@@ -172,6 +175,15 @@ class InputException(Exception):
 
 
 # Helper functions
+def translate_field(coord):
+    """
+    Takes a tuple 'coordinate' argument
+    Returns a string representation of the coordinate.
+    """
+    row, column = coord
+    return f"{row}{column}"
+
+
 def is_valid_coordinate(coord):
     """
     Checks whether a tuple 'coordinate' argument lies within the dimensions
