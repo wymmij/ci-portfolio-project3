@@ -12,6 +12,10 @@ def print_rules():
     print("  the arsenal reduces by 10 missiles.\n")
 
 
+def play_game():
+    pass
+
+
 def new_session():
     """
     Begins a new session. Welcomes user, prompts for name, offers to display
@@ -26,3 +30,6 @@ def new_session():
         print_rules()
 
     play_game()
+
+
+new_session()
