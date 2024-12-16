@@ -119,7 +119,11 @@ class Ship:
 
 
 def is_valid_coordinate(coord):
-    pass
+    row, column = coord
+    if row >= 0 and row < 10 and column >= 0 and column < 10:
+        return True
+    else:
+        return False
 
 
 def generate_exclusion_digits(digit):
