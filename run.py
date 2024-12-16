@@ -1,3 +1,5 @@
+from random import choice
+
 
 class PlayingBoard:
 
@@ -66,7 +68,62 @@ class Ship:
             self.fields.append(tuple())
 
     def generate_ship_position(self, size, vacant_fields, fleet_fields):
-        pass
+        row, column = choice(vacant_fields)
+        adjusted_size = size - 1
+        if choice(["latitude", "longitude"]) == "latitude":
+            if choice(["north", "south"]) == "north":
+                if is_valid_coordinate((row - adjusted_size, column)):
+                    direction = "north"
+                else:
+                    direction = "south"
+            else:
+                if is_valid_coordinate((row + adjusted_size, column)):
+                    direction = "south"
+                else:
+                    direction = "north"
+        else:
+            if choice(["east", "west"]) == "east":
+                if is_valid_coordinate((row, column + adjusted_size)):
+                    direction = "east"
+                else:
+                    direction = "west"
+            else:
+                if is_valid_coordinate((row, column - adjusted_size)):
+                    direction = "west"
+                else:
+                    direction = "east"
+
+        ship_coords = []
+        for step in range(size):
+            match direction:
+                case "north":
+                    ship_coords.append((row - step, column))
+                case "south":
+                    ship_coords.append((row + step, column))
+                case "east":
+                    ship_coords.append((row, column + step))
+                case "west":
+                    ship_coords.append((row, column - step))
+
+        exclusion_coords = set()
+        for ship in ship_coords:
+            row, col = ship
+            rows = generate_exclusion_digits(row)
+            cols = generate_exclusion_digits(col)
+            for r in rows:
+                for c in cols:
+                    exclusion_coords.add((r, c))
+
+        if not exclusion_coords & set(fleet_fields):
+            return (ship_coords, list(exclusion_coords))
+
+
+def is_valid_coordinate(coord):
+    pass
+
+
+def generate_exclusion_digits(digit):
+    pass
 
 
 def print_rules():
