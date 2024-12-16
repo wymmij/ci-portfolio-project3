@@ -272,6 +272,19 @@ def play_game():
             print(f"Missiles remaining: {missiles_remaining - missiles_launched:2d}")
             print("-" * 24, "\n")
 
+    if len(fleet_fields) == len(hits):
+        print("\nYou win!!")
+        print("You sunk the whole fleet!")
+        games_won += 1
+    elif missiles_remaining == missiles_launched:
+        print("\nYou lose!!")
+        print("You used all your missiles.")
+        games_lost += 1
+    elif missiles_remaining - missiles_launched < len(fleet_fields) - len(hits):
+        print("\nYou lose!!")
+        print("You don't have enough missiles to destroy the fleet.")
+        games_lost += 1
+
 
 def new_session():
     """
