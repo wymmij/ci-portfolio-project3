@@ -61,6 +61,19 @@ class PlayingBoard:
             vacant_fields = [x for x in vacant_fields if x not in excluded_fields]
         return fleet_fields
 
+    def update_board(self, hits, misses):
+        """
+        Update the board after each turn
+        """
+        updated = self.initial_board
+        for field in hits:
+            row, column = field
+            updated = updated.replace(f" {row}{column} ", "<[]>")
+        for field in misses:
+            row, column = field
+            updated = updated.replace(f" {row}{column} ", "~~~~")
+        return updated
+    
 
 class Ship:
 
@@ -243,7 +256,7 @@ def play_game():
             print("\nMissed")
             misses.append(target)
 
-            
+
 def new_session():
     """
     Begins a new session. Welcomes user, prompts for name, offers to display
