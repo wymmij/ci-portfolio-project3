@@ -31,6 +31,24 @@ class PlayingBoard:
         """
 
 
+class Ship:
+
+    def __init__(self, size):
+        self.size = size
+        self.fields = []
+        match size:
+            case 1:
+                self.type = "submarine"
+            case 2:
+                self.type = "destroyer"
+            case 3:
+                self.type = "cruiser"
+            case 4:
+                self.type = "battleship"
+        for i in range(size):
+            self.fields.append(tuple())
+
+
 def print_rules():
     print("\nThe fleet consists of 10 ships:")
     print("  4 submarines  (1 field)")
