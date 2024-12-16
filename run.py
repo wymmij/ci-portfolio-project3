@@ -240,7 +240,6 @@ def play_game():
     missiles_launched = 0
     missiles_remaining = 0
 
-    difficulty_levels = [level for level in range(1, 6)]
     print("There are 5 levels of difficulty, level 1 being the easiest.")
     while True:
         try:
@@ -344,8 +343,6 @@ def new_session():
     rules then starts the first game.
     """
     print("\nWelcome to Battleship.\n")
-
-    player = input("Enter your name:\n> ")
 
     rules = input("Enter ? for the rules, otherwise any other key to continue:\n> ")
     if rules == "?":
