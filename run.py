@@ -64,7 +64,20 @@ def print_rules():
 
 
 def play_game():
-    pass
+
+    board = PlayingBoard()
+    fleet = [
+        Ship(4),
+        Ship(3),
+        Ship(3),
+        Ship(2),
+        Ship(2),
+        Ship(2),
+        Ship(1),
+        Ship(1),
+        Ship(1),
+        Ship(1),
+    ]
 
 
 def new_session():
