@@ -127,7 +127,12 @@ def is_valid_coordinate(coord):
 
 
 def generate_exclusion_digits(digit):
-    pass
+    digit_list = [digit]
+    if digit > 0:
+        digit_list.insert(0, digit - 1)
+    if digit < 9:
+        digit_list.append(digit + 1)
+    return digit_list
 
 
 def print_rules():
