@@ -30,6 +30,23 @@ class PlayingBoard:
         |________________________________________|
         """
 
+    def populate_board(self, fleet):
+        """
+        Populate the playing board with the fleet of ships.
+        Returns a list of fields occupied by the fleet.
+        """
+        vacant_fields = self.fields.copy()
+        excluded_fields = []
+        fleet_fields = []  
+        for ship in fleet:
+            ship_coords, exclusion_coords = ship.generate_ship_position(ship.size, vacant_fields, fleet_fields)
+            excluded_fields += exclusion_coords
+            fleet_fields += ship_coords
+            for field in range(len(ship.fields)):
+                ship.fields[field] = ship_coords[field]
+            vacant_fields = [x for x in vacant_fields if x not in excluded_fields]
+        return fleet_fields
+
 
 class Ship:
 
@@ -47,6 +64,9 @@ class Ship:
                 self.type = "battleship"
         for i in range(size):
             self.fields.append(tuple())
+
+    def generate_ship_position(self, size, vacant_fields, fleet_fields):
+        pass
 
 
 def print_rules():
@@ -78,6 +98,8 @@ def play_game():
         Ship(1),
         Ship(1),
     ]
+
+    fleet_fields = board.populate_board(fleet)
 
 
 def new_session():
